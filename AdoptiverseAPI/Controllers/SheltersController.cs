@@ -64,7 +64,7 @@ namespace AdoptiverseAPI.Controllers
         {
             var shelterToFind = _context.Shelters.Find(shelterId);
             
-            shelterToFind.Name = shelter.Name ;
+            shelterToFind.Name = shelter.Name;
              shelterToFind.City = shelter.City;
             shelterToFind.UpdatedAt = shelter.UpdatedAt;
             shelterToFind.CreatedAt = shelter.CreatedAt;

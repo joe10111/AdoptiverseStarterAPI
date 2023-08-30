@@ -3,6 +3,7 @@ using System;
 using AdoptiverseAPI.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AdoptiverseAPI.Migrations
 {
     [DbContext(typeof(AdoptiverseApiContext))]
-    partial class AdoptiverseApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230830170809_updatedPetsOnShelterOBJ")]
+    partial class updatedPetsOnShelterOBJ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

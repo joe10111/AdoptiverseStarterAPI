@@ -3,6 +3,7 @@ using System;
 using AdoptiverseAPI.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AdoptiverseAPI.Migrations
 {
     [DbContext(typeof(AdoptiverseApiContext))]
-    partial class AdoptiverseApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230830165020_createdPetTabelAgain")]
+    partial class createdPetTabelAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,9 +67,6 @@ namespace AdoptiverseAPI.Migrations
                     b.HasKey("Id")
                         .HasName("pk_pets");
 
-                    b.HasIndex("ShelterId")
-                        .HasDatabaseName("ix_pets_shelter_id");
-
                     b.ToTable("pets", (string)null);
                 });
 
@@ -109,21 +109,6 @@ namespace AdoptiverseAPI.Migrations
                         .HasName("pk_shelters");
 
                     b.ToTable("shelters", (string)null);
-                });
-
-            modelBuilder.Entity("AdoptiverseAPI.Models.Pet", b =>
-                {
-                    b.HasOne("AdoptiverseAPI.Models.Shelter", null)
-                        .WithMany("Pets")
-                        .HasForeignKey("ShelterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_pets_shelters_shelter_id");
-                });
-
-            modelBuilder.Entity("AdoptiverseAPI.Models.Shelter", b =>
-                {
-                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

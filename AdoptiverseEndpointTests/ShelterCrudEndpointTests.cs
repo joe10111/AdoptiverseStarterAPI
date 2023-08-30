@@ -113,6 +113,34 @@ namespace AdoptiverseEndpointTests
             Assert.Equal(204, (int)response.StatusCode);
             Assert.Equal("Happy Paws", context.Shelters.Find(shelter1.Id).Name);
         }
+        // left off making test for delete
+        [Fact]
+        public async void DeleteShelter_ShelterHasBeenRemoved()
+        {
+            // Anrange
+            Shelter shelter1 = new Shelter { CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, FosterProgram = false, Rank = 1, City = "Boulder", Name = "PetShelter1" };
+            Shelter shelter2 = new Shelter { CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, FosterProgram = true, Rank = 2, City = "LongMount", Name = "PetShelter2" };
+
+            List<Shelter> shelters = new() { shelter1, shelter2 };
+
+            // Create fresh database
+            AdoptiverseApiContext context = GetDbContext();
+
+            context.Shelters.AddRange(shelters);
+            context.SaveChanges();
+
+            HttpClient client = _factory.CreateClient();
+
+            // Act
+            HttpResponseMessage response = await client.DeleteAsync($"api/shelters/{shelter1.Id}");
+            string content = await response.Content.ReadAsStringAsync();
+
+            // Assert
+            string expected = ObjectToJson(shelter2);
+
+            Assert.Equal(204, (int)response.StatusCode);
+            Assert.DoesNotContain(expected, content);
+        }
 
         private string ObjectToJson(object obj)
         {
